@@ -213,4 +213,56 @@ package com.rounceville.GameOfLife;
 		assertEquals(true, gol.aliveAt(2, 2));
 	}
 	
+	@Test
+	public void testCanCountNeighbors() {
+		GameOfLife gol = (new GameOfLife().setGridByString(cDeadChar, cAliveChar, cRowDelimChar, "...\n.*.\n..."));
+		assertEquals(0, gol.countNeighborsAt(1, 1));
+		gol.setAliveAt(1, 0);
+		assertEquals(1, gol.countNeighborsAt(1, 1));
+		gol.setAliveAt(1, 2);
+		assertEquals(2, gol.countNeighborsAt(1, 1));
+		gol.setAliveAt(0, 1);
+		assertEquals(3, gol.countNeighborsAt(1, 1));
+		gol.setAliveAt(2, 1);
+		assertEquals(4, gol.countNeighborsAt(1, 1));
+		gol.setAliveAt(0, 0);
+		assertEquals(5, gol.countNeighborsAt(1, 1));
+		gol.setAliveAt(0, 2);
+		assertEquals(6, gol.countNeighborsAt(1, 1));
+		gol.setAliveAt(2, 0);
+		assertEquals(7, gol.countNeighborsAt(1, 1));
+		gol.setAliveAt(2, 2);
+		assertEquals(8, gol.countNeighborsAt(1, 1));
+	}
+
+	@Test
+	public void testCanCountNeighborsAtBoundaries() {
+		GameOfLife gol = new GameOfLife();
+		gol.setGridByString(cDeadChar, cAliveChar, cRowDelimChar, "*..\n...\n...");
+		assertEquals(0, gol.countNeighborsAt(0, 0));
+		gol.setGridByString(cDeadChar, cAliveChar, cRowDelimChar, "...\n...\n..*");
+		assertEquals(0, gol.countNeighborsAt(2, 2));
+		gol.setGridByString(cDeadChar, cAliveChar, cRowDelimChar, "..*\n...\n...");
+		assertEquals(0, gol.countNeighborsAt(0, 2));
+		gol.setGridByString(cDeadChar, cAliveChar, cRowDelimChar, "...\n...\n*..");
+		assertEquals(0, gol.countNeighborsAt(2, 0));
+
+		gol.setGridByString(cDeadChar, cAliveChar, cRowDelimChar, "*..\n.*.\n...");
+		assertEquals(1, gol.countNeighborsAt(0, 0));
+		gol.setGridByString(cDeadChar, cAliveChar, cRowDelimChar, "...\n.*.\n..*");
+		assertEquals(1, gol.countNeighborsAt(2, 2));
+		gol.setGridByString(cDeadChar, cAliveChar, cRowDelimChar, "..*\n.*.\n...");
+		assertEquals(1, gol.countNeighborsAt(0, 2));
+		gol.setGridByString(cDeadChar, cAliveChar, cRowDelimChar, "...\n.*.\n*..");
+		assertEquals(1, gol.countNeighborsAt(2, 0));
+	}
+	
+	
+	@Test
+	public void testAnyLiveCellWithFewerThanTwoLiveNeighboursDies() {
+		GameOfLife gol = (new GameOfLife().setGridByString(cDeadChar, cAliveChar, cRowDelimChar, "...\n.*.\n..."));
+		assertEquals(true, gol.aliveAt(1, 1));
+	}
+	
+	
   }

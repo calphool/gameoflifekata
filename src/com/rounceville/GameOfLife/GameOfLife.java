@@ -89,4 +89,42 @@ public class GameOfLife {
 		return sb.toString();
 	}
 
+	public int countNeighborsAt(int iRow, int iCol) {
+		int iNeighbors = 0;
+		
+		if(iRow-1 >= 0)
+			if(aliveAt(iRow-1, iCol))
+				iNeighbors++;
+	
+		if(iRow+1 < getRowSize())
+			if(aliveAt(iRow+1, iCol))
+				iNeighbors++;
+		
+		if(iCol-1 >= 0)
+			if(aliveAt(iRow, iCol-1))
+				iNeighbors++;
+		
+		if(iCol+1 < getColumnSize())
+			if(aliveAt(iRow, iCol+1))
+				iNeighbors++;
+		
+		if(iRow+1 < getRowSize() && iCol+1 < getColumnSize())
+			if(aliveAt(iRow+1, iCol+1))
+				iNeighbors++;
+		
+		if(iRow-1 >= 0 && iCol-1 >= 0)
+			if(aliveAt(iRow-1, iCol-1))
+				iNeighbors++;
+		
+		if(iRow+1 < getRowSize() && iCol-1 >= 0)
+			if(aliveAt(iRow+1, iCol-1))
+				iNeighbors++;
+		
+		if(iRow-1 >= 0 && iCol+1 < getColumnSize())
+			if(aliveAt(iRow-1, iCol+1))
+				iNeighbors++;
+		
+		return iNeighbors;
+	}
+
 }
