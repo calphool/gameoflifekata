@@ -132,5 +132,37 @@ package com.rounceville.GameOfLife;
 		exception.expect(IndexOutOfBoundsException.class);
 		gol.setDeadAt(-1, -1);
 	}
-  
+	
+	@Test
+	public void testEmitCurrentStateToStringAllDead() {
+		GameOfLife gol = new GameOfLife(3,3);
+		String sGrid = gol.toString();
+		assertEquals(12, sGrid.length());
+		sGrid = sGrid.replace("\n", "");
+		assertEquals(9, sGrid.length());
+		assertEquals(".........", sGrid);
+	}
+
+	@Test
+	public void testEmitCurrentStateToStringArbitraryAliveAndDead() {
+		GameOfLife gol = new GameOfLife(3,3);
+		gol.setAliveAt(0, 0);
+		String sGrid = gol.toString();
+		assertEquals(12, sGrid.length());
+		assertEquals("*..\n...\n...\n", sGrid);
+
+		gol.setAliveAt(2, 2);
+		sGrid = gol.toString();
+		assertEquals("*..\n...\n..*\n", sGrid);
+
+		gol.setAliveAt(1, 1);
+		sGrid = gol.toString();
+		assertEquals("*..\n.*.\n..*\n", sGrid);
+		
+		assertEquals(true, gol.aliveAt(1, 1));
+		gol.setDeadAt(1, 1);
+		sGrid = gol.toString();
+		assertEquals("*..\n...\n..*\n", sGrid);
+	}
+
   }

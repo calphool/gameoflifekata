@@ -32,5 +32,19 @@ public class GameOfLife {
 	public void setDeadAt(int iRow, int iColumn) {
 		baMatrix.setOff(iRow, iColumn);
 	}
+	
+	public String toString() {
+		StringBuffer sb = new StringBuffer();
+		for(int iRow = 0; iRow < getRowSize(); iRow++) {
+			for(int iCol = 0; iCol < getColumnSize(); iCol++) {
+				if(aliveAt(iRow, iCol))
+					sb.append("*");
+				else
+					sb.append(".");
+			}
+			sb.append("\n");
+		}
+		return sb.toString();
+	}
 
 }
