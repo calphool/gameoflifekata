@@ -25,4 +25,12 @@ public class GameOfLife {
 		return baMatrix.getAt(iRow, iCol);
 	}
 
+	public void setAliveAt(int iRow, int iColumn) {
+		baMatrix.setOn(iRow, iColumn);
+	}
+
+	public void setDeadAt(int iRow, int iColumn) {
+		baMatrix.setOff(iRow, iColumn);
+	}
+
 }

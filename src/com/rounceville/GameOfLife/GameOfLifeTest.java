@@ -55,5 +55,50 @@ package com.rounceville.GameOfLife;
  			for(int iCols = 0; iCols < 4; iCols++)
  				assertEquals(false, gol.aliveAt(iRows, iCols));
  	}
+ 	
+ 	@Test
+ 	public void testCanMakeArbitraryCellsAlive() {
+ 		GameOfLife gol = new GameOfLife(3,3);
+ 		
+ 		assertEquals(false, gol.aliveAt(0, 0));
+ 		gol.setAliveAt(0,0);
+ 		assertEquals(true, gol.aliveAt(0, 0));
+
+ 		assertEquals(false, gol.aliveAt(1, 1));
+ 		gol.setAliveAt(1,1);
+ 		assertEquals(true, gol.aliveAt(1, 1));
+
+ 		assertEquals(false, gol.aliveAt(2, 2));
+ 		gol.setAliveAt(2,2);
+ 		assertEquals(true, gol.aliveAt(2, 2));
+
+ 		assertEquals(false, gol.aliveAt(2, 1));
+ 		gol.setAliveAt(2,1);
+ 		assertEquals(true, gol.aliveAt(2, 1));
+ 	}
+ 	
+ 	@Test
+ 	public void testCanMakeArbitraryCellDead() {
+ 		GameOfLife gol = new GameOfLife(3,3);
+ 		gol.setAliveAt(0,0);
+ 		assertEquals(true, gol.aliveAt(0, 0));
+ 		gol.setDeadAt(0,0);
+ 		assertEquals(false, gol.aliveAt(0, 0));
+
+ 		gol.setAliveAt(1,1);
+ 		assertEquals(true, gol.aliveAt(1, 1));
+ 		gol.setDeadAt(1,1);
+ 		assertEquals(false, gol.aliveAt(1, 1));
+ 
+		gol.setAliveAt(2,2);
+ 		assertEquals(true, gol.aliveAt(2, 2));
+ 		gol.setDeadAt(2,2);
+ 		assertEquals(false, gol.aliveAt(2, 2));
+
+		gol.setAliveAt(2,1);
+ 		assertEquals(true, gol.aliveAt(2, 1));
+ 		gol.setDeadAt(2,1);
+ 		assertEquals(false, gol.aliveAt(2, 1));
+ 	}
   
   }
