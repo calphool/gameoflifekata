@@ -2,24 +2,23 @@ package com.rounceville.GameOfLife;
 
 public class GameOfLife {
 
-	int iMyRowSize;
-	int iMyColumnSize;
+	TwoDimensionalBitArray baMatrix = null;
 	
 	public GameOfLife(int iRowSize, int iColumnSize) {
 		if(iRowSize < 1)
 			throw new IllegalArgumentException("Invalid row size");
 		if(iColumnSize < 1)
 			throw new IllegalArgumentException("Invalid column size");
-		iMyColumnSize = iColumnSize;
-		iMyRowSize = iRowSize;
+		
+		baMatrix = new TwoDimensionalBitArray(iRowSize, iColumnSize);
 	}
 
 	public int getRowSize() {
-		return iMyRowSize;
+		return baMatrix.getRowSize();
 	}
 	
 	public int getColumnSize() {
-		return iMyColumnSize;
+		return baMatrix.getColumnSize();
 	}
 
 }
