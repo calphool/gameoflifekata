@@ -351,5 +351,31 @@ package com.rounceville.GameOfLife;
 		assertEquals(false, gol.aliveAt(2, 0));
 		assertEquals(true, gol.aliveAt(1, 1));
 	}
+	
+	@Test
+	public void testStableAutomaton() {
+		// this configuration should never die
+		GameOfLife gol = new GameOfLife(15,15);
+		String sDeadGameOfLife = new GameOfLife(15,15).toString();
+
+		assertEquals(sDeadGameOfLife, gol.toString());
+		gol.setAliveAt(5,5);
+		gol.setAliveAt(6,5);
+		gol.setAliveAt(7,5);
+		gol.setAliveAt(8,5);
+		gol.setAliveAt(9,5);
+		gol.setAliveAt(5,7);
+		gol.setAliveAt(6,7);
+		gol.setAliveAt(7,9);
+		gol.setAliveAt(8,9);
+		gol.setAliveAt(9,9);
+		gol.setAliveAt(8,9);
+		gol.setAliveAt(9,9);
+		assertNotEquals(sDeadGameOfLife, gol.toString());
+
+		for(int iTestCtr = 0; iTestCtr < 1000; iTestCtr++) {
+			assertEquals(false, gol.nextGeneration().equals(sDeadGameOfLife));
+		}
+	}
 
   }
