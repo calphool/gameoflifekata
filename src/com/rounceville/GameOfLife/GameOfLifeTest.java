@@ -11,7 +11,7 @@ package com.rounceville.GameOfLife;
 	 
 	private char cRowDelimChar = '\n';
 	private char cAliveChar = '*';
-	private char cDeadChar = ',';
+	private char cDeadChar = '.';
 	
  	@Rule
  	public final ExpectedException exception = ExpectedException.none();
@@ -259,9 +259,46 @@ package com.rounceville.GameOfLife;
 	
 	
 	@Test
-	public void testAnyLiveCellWithFewerThanTwoLiveNeighboursDies() {
+	public void testAnyLiveCellWithFewerThanTwoLiveNeighboursDies1() {
 		GameOfLife gol = (new GameOfLife().setGridByString(cDeadChar, cAliveChar, cRowDelimChar, "...\n.*.\n..."));
 		assertEquals(true, gol.aliveAt(1, 1));
+		gol.nextGeneration();
+		assertEquals(false, gol.aliveAt(1, 1));
+	}
+
+	@Test
+	public void testAnyLiveCellWithFewerThanTwoLiveNeighboursDies2() {
+		GameOfLife gol = (new GameOfLife().setGridByString(cDeadChar, cAliveChar, cRowDelimChar, "*..\n.*.\n..."));
+		assertEquals(true, gol.aliveAt(1, 1));
+		gol.nextGeneration();
+		for(int iRow = 0; iRow < 3; iRow++)
+			for(int iCol = 0; iCol < 3; iCol++)
+				assertEquals(false, gol.aliveAt(iRow, iCol));
+		
+	}
+	
+	@Test
+	public void testAnyLiveCellWithFewerThanTwoLiveNeighboursDies3() {
+		GameOfLife gol = (new GameOfLife().setGridByString(cDeadChar, cAliveChar, cRowDelimChar, "*..\n.*.\n..*"));
+		gol.nextGeneration();
+		assertEquals(false, gol.aliveAt(0, 0));
+		assertEquals(false, gol.aliveAt(0, 1));
+		assertEquals(false, gol.aliveAt(0, 2));
+		assertEquals(false, gol.aliveAt(2, 0));
+		assertEquals(false, gol.aliveAt(2, 1));
+		assertEquals(false, gol.aliveAt(2, 2));
+		assertEquals(false, gol.aliveAt(1, 0));
+		assertEquals(false, gol.aliveAt(1, 2));
+		assertEquals(true, gol.aliveAt(1, 1));
+	}
+
+	@Test
+	public void testAnyLiveCellWithFewerThanTwoLiveNeighboursDies4() {
+		GameOfLife gol = (new GameOfLife().setGridByString(cDeadChar, cAliveChar, cRowDelimChar, "*.*\n...\n*.*"));
+		gol.nextGeneration();
+		for(int iRow = 0; iRow < 3; iRow++)
+			for(int iCol = 0; iCol < 3; iCol++)
+				assertEquals(false, gol.aliveAt(iRow, iCol));
 	}
 	
 	

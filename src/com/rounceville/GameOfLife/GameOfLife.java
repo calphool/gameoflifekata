@@ -127,4 +127,19 @@ public class GameOfLife {
 		return iNeighbors;
 	}
 
+
+	public String nextGeneration() {
+		GameOfLife outputGOL = new GameOfLife().setGridByString(cMyDeadChar, cMyLiveChar, cMyRowDelim, this.toString());
+				
+		for(int iRow = 0; iRow < getRowSize(); iRow++) {
+			for(int iCol = 0; iCol < getColumnSize(); iCol++) {
+				if(countNeighborsAt(iRow, iCol) < 2)
+					outputGOL.setDeadAt(iRow, iCol);
+			}
+ 		}
+		
+		this.baMatrix = outputGOL.baMatrix;
+		return outputGOL.toString();
+	}
+
 }
