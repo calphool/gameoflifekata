@@ -8,6 +8,11 @@ package com.rounceville.GameOfLife;
 
  public class GameOfLifeTest {
  
+	 
+	private char cRowDelimChar = '\n';
+	private char cAliveChar = '*';
+	private char cDeadChar = ',';
+	
  	@Rule
  	public final ExpectedException exception = ExpectedException.none();
  		
@@ -137,7 +142,7 @@ package com.rounceville.GameOfLife;
 	public void testEmitCurrentStateToStringAllDead() {
 		GameOfLife gol = new GameOfLife(3,3);
 		String sGrid = gol.toString();
-		assertEquals(12, sGrid.length());
+		assertEquals(11, sGrid.length());
 		sGrid = sGrid.replace("\n", "");
 		assertEquals(9, sGrid.length());
 		assertEquals(".........", sGrid);
@@ -148,21 +153,64 @@ package com.rounceville.GameOfLife;
 		GameOfLife gol = new GameOfLife(3,3);
 		gol.setAliveAt(0, 0);
 		String sGrid = gol.toString();
-		assertEquals(12, sGrid.length());
-		assertEquals("*..\n...\n...\n", sGrid);
+		assertEquals(11, sGrid.length());
+		assertEquals("*..\n...\n...", sGrid);
 
 		gol.setAliveAt(2, 2);
 		sGrid = gol.toString();
-		assertEquals("*..\n...\n..*\n", sGrid);
+		assertEquals("*..\n...\n..*", sGrid);
 
 		gol.setAliveAt(1, 1);
 		sGrid = gol.toString();
-		assertEquals("*..\n.*.\n..*\n", sGrid);
+		assertEquals("*..\n.*.\n..*", sGrid);
 		
 		assertEquals(true, gol.aliveAt(1, 1));
 		gol.setDeadAt(1, 1);
 		sGrid = gol.toString();
-		assertEquals("*..\n...\n..*\n", sGrid);
+		assertEquals("*..\n...\n..*", sGrid);
+	}
+	
+	@Test
+	public void testEmptyConstructor() {
+		GameOfLife gol = new GameOfLife();
+		assertNotEquals(null, gol);
+		assertEquals(1, gol.getColumnSize());
+		assertEquals(1, gol.getRowSize());
+	}
+	
+	@Test
+	public void testCannotSetGridContentsWithInvalidString() {
+		exception.expect(IllegalArgumentException.class);
+		new GameOfLife().setGridByString(cDeadChar, cAliveChar, cRowDelimChar, "");
 	}
 
+	@Test
+	public void testCannotSetGridContentsWithInvalidCharsLiveAndDead() {
+		exception.expect(IllegalArgumentException.class);
+		new GameOfLife().setGridByString('.', '.', 'A', "***...***");
+	}
+
+	@Test
+	public void testCannotSetGridContentsWithInvalidCharsLiveAndDeadAndDelim() {
+		exception.expect(IllegalArgumentException.class);
+		new GameOfLife().setGridByString('A', 'B', 'A', "***...***");
+	}
+	
+	
+	@Test
+	public void testCanSetGridContentsByString() {
+		GameOfLife gol = (new GameOfLife().setGridByString(cDeadChar, cAliveChar, cRowDelimChar, "***\n...\n***"));
+		assertEquals(3, gol.getColumnSize());
+		assertEquals(3, gol.getRowSize());
+		assertEquals(true, gol.aliveAt(0, 0));
+		assertEquals(true, gol.aliveAt(0, 1));
+		assertEquals(true, gol.aliveAt(0, 2));
+		assertEquals(false, gol.aliveAt(1, 0));
+		assertEquals(false, gol.aliveAt(1, 1));
+		assertEquals(false, gol.aliveAt(1, 2));
+		assertEquals(true, gol.aliveAt(2, 0));
+		assertEquals(true, gol.aliveAt(2, 1));
+		assertEquals(true, gol.aliveAt(2, 2));
+	}
+	
   }

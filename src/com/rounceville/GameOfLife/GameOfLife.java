@@ -3,7 +3,10 @@ package com.rounceville.GameOfLife;
 public class GameOfLife {
 
 	TwoDimensionalBitArray baMatrix = null;
-	
+	char cMyDeadChar = '.';
+	char cMyLiveChar = '*';
+	char cMyRowDelim = '\n';
+
 	public GameOfLife(int iRowSize, int iColumnSize) {
 		if(iRowSize < 1)
 			throw new IllegalArgumentException("Invalid row size");
@@ -12,6 +15,44 @@ public class GameOfLife {
 		
 		baMatrix = new TwoDimensionalBitArray(iRowSize, iColumnSize);
 	}
+
+	
+	public GameOfLife() {
+		this(1,1); 
+	}
+
+
+	public GameOfLife setGridByString(char cDeadChar, char cLiveChar, char cRowDelim, String sBuffer) {
+		if(cDeadChar == cLiveChar)
+			throw new IllegalArgumentException("Can't have live and dead chars the same");
+		if(cDeadChar == cRowDelim || cLiveChar == cRowDelim)
+			throw new IllegalArgumentException("Can't have live and dead chars the same as row delimiter");
+		
+		String[] sRows = sBuffer.split(String.valueOf(cRowDelim));
+		int iNumRows = sRows.length;
+		
+		int iMaxColSize = -1;
+		for(int iCtr = 0; iCtr < iNumRows; iCtr++) {
+			if(sRows[iCtr].length() > iMaxColSize)
+				iMaxColSize = sRows[iCtr].length();
+		}
+		if(iMaxColSize < 1)
+			throw new IllegalArgumentException("String doesn't have any columns");
+		
+		baMatrix = new TwoDimensionalBitArray(iNumRows, iMaxColSize);
+		for(int iCtr = 0; iCtr < iNumRows; iCtr++) {
+			for(int iCharCtr = 0; iCharCtr < sRows[iCtr].length(); iCharCtr++) {
+				if(sRows[iCtr].charAt(iCharCtr) == cLiveChar)
+					setAliveAt(iCtr, iCharCtr);
+			}
+		}		
+		
+		cMyRowDelim = cRowDelim;
+		cMyDeadChar = cDeadChar;
+		cMyLiveChar = cLiveChar;
+		return this;
+ 	}
+	
 
 	public int getRowSize() {
 		return baMatrix.getRowSize();
@@ -38,11 +79,12 @@ public class GameOfLife {
 		for(int iRow = 0; iRow < getRowSize(); iRow++) {
 			for(int iCol = 0; iCol < getColumnSize(); iCol++) {
 				if(aliveAt(iRow, iCol))
-					sb.append("*");
+					sb.append(cMyLiveChar);
 				else
-					sb.append(".");
+					sb.append(cMyDeadChar);
 			}
-			sb.append("\n");
+			if(iRow < getRowSize()-1)
+				sb.append(cMyRowDelim);
 		}
 		return sb.toString();
 	}
