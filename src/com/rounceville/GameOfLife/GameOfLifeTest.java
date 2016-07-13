@@ -1,44 +1,25 @@
 package com.rounceville.GameOfLife;
 
-import static org.junit.Assert.*;
+public class GameOfLife {
 
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
-
-public class GameOfLifeTest {
-
-	@Rule
-	public final ExpectedException exception = ExpectedException.none();
-		
-	@Test
-	public void testThatInvalidSizedGridsCannotBeCreatedTest1() {
-		exception.expect(IllegalArgumentException.class);
-		new GameOfLife(0, 1);
+	int iMyRowSize;
+	int iMyColumnSize;
+	
+	public GameOfLife(int iRowSize, int iColumnSize) {
+		if(iRowSize < 1)
+			throw new IllegalArgumentException("Invalid row size");
+		if(iColumnSize < 1)
+			throw new IllegalArgumentException("Invalid column size");
+		iMyColumnSize = iColumnSize;
+		iMyRowSize = iRowSize;
 	}
 
-	@Test
-	public void testThatInvalidSizedGridsCannotBeCreatedTest2() {
-		exception.expect(IllegalArgumentException.class);
-		new GameOfLife(1, 0);
+	public int getRowSize() {
+		return iMyRowSize;
 	}
-
-	@Test
-	public void testThatInvalidSizedGridsCannotBeCreatedTest3() {
-		exception.expect(IllegalArgumentException.class);
-		new GameOfLife(-1, 0);
-	}
-
-	@Test
-	public void testThatInvalidSizedGridsCannotBeCreatedTest4() {
-		exception.expect(IllegalArgumentException.class);
-		new GameOfLife(0, -1);
-	}
-
-	@Test
-	public void testGameOfLifeConstructsAnObject() {
-		GameOfLife gol = new GameOfLife(1, 1);
-		assertNotEquals(gol, null);
+	
+	public int getColumnSize() {
+		return iMyColumnSize;
 	}
 
 }
