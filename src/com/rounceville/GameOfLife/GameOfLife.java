@@ -138,6 +138,10 @@ public class GameOfLife {
 				
 				if(countNeighborsAt(iRow, iCol) > 3)
 					outputGOL.setDeadAt(iRow, iCol);
+				
+				if(!aliveAt(iRow, iCol))
+					if(countNeighborsAt(iRow, iCol) == 3)
+						outputGOL.setAliveAt(iRow, iCol);
 			}
  		}
 		
