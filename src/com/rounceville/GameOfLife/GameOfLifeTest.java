@@ -100,5 +100,37 @@ package com.rounceville.GameOfLife;
  		gol.setDeadAt(2,1);
  		assertEquals(false, gol.aliveAt(2, 1));
  	}
+ 	
+	@Test
+ 	public void testCantExceedBoundariesWhenSettingAlive() {
+		GameOfLife gol = new GameOfLife(3,3);
+		gol.setAliveAt(2, 2); // no problem
+		exception.expect(IndexOutOfBoundsException.class);
+		gol.setAliveAt(3, 3);
+	}
+
+	@Test
+ 	public void testCantExceedBoundariesWhenSettingDead() {
+		GameOfLife gol = new GameOfLife(3,3);
+		gol.setDeadAt(2, 2); // no problem
+		exception.expect(IndexOutOfBoundsException.class);
+		gol.setDeadAt(3, 3);
+	}
+
+	@Test
+ 	public void testCantExceedBoundariesLowWhenSettingAlive() {
+		GameOfLife gol = new GameOfLife(3,3);
+		gol.setAliveAt(0, 0); // no problem
+		exception.expect(IndexOutOfBoundsException.class);
+		gol.setAliveAt(-1, -1);
+	}
+
+	@Test
+ 	public void testCantExceedBoundariesLowWhenSettingDead() {
+		GameOfLife gol = new GameOfLife(3,3);
+		gol.setDeadAt(0, 0); // no problem
+		exception.expect(IndexOutOfBoundsException.class);
+		gol.setDeadAt(-1, -1);
+	}
   
   }
