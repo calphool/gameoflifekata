@@ -20,5 +20,9 @@ public class GameOfLife {
 	public int getColumnSize() {
 		return baMatrix.getColumnSize();
 	}
+	
+	public boolean aliveAt(int iRow, int iCol) {
+		return baMatrix.getAt(iRow, iCol);
+	}
 
 }

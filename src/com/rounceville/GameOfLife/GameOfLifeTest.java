@@ -47,5 +47,13 @@ package com.rounceville.GameOfLife;
  		assertEquals(1, gol.getRowSize());
  		assertEquals(2, gol.getColumnSize());
   	}
+ 	
+ 	@Test
+ 	public void testAssertInitializedGOLIsAllDead() {
+ 		GameOfLife gol = new GameOfLife(3,4);
+ 		for(int iRows = 0; iRows < 3; iRows++)
+ 			for(int iCols = 0; iCols < 4; iCols++)
+ 				assertEquals(false, gol.aliveAt(iRows, iCols));
+ 	}
   
   }
