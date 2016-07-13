@@ -301,5 +301,29 @@ package com.rounceville.GameOfLife;
 				assertEquals(false, gol.aliveAt(iRow, iCol));
 	}
 	
+	@Test
+	public void testAnyLiveCellWithMoreThanThreeNeighboursDies1() {
+		GameOfLife gol = (new GameOfLife().setGridByString(cDeadChar, cAliveChar, cRowDelimChar, "***\n.*.\n.*."));
+		gol.nextGeneration();
+		assertEquals(false, gol.aliveAt(1, 1));
+	}
+
+	@Test
+	public void testAnyLiveCellWithMoreThanThreeNeighboursDies2() {
+		GameOfLife gol = (new GameOfLife().setGridByString(cDeadChar, cAliveChar, cRowDelimChar, "*.*\n.*.\n*.*"));
+		gol.nextGeneration();
+		assertEquals(false, gol.aliveAt(1, 1));
+	}
+
+	@Test
+	public void testAnyLiveCellWithMoreThanThreeNeighboursDies3() {
+		GameOfLife gol = (new GameOfLife().setGridByString(cDeadChar, cAliveChar, cRowDelimChar, "***\n***\n***"));
+		gol.nextGeneration();
+		assertEquals(false, gol.aliveAt(1, 1));
+		assertEquals(false, gol.aliveAt(1, 0));
+		assertEquals(false, gol.aliveAt(1, 2));
+		assertEquals(false, gol.aliveAt(0, 1));
+		assertEquals(false, gol.aliveAt(2, 1));
+	}
 	
   }

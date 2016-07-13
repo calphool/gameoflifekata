@@ -135,6 +135,9 @@ public class GameOfLife {
 			for(int iCol = 0; iCol < getColumnSize(); iCol++) {
 				if(countNeighborsAt(iRow, iCol) < 2)
 					outputGOL.setDeadAt(iRow, iCol);
+				
+				if(countNeighborsAt(iRow, iCol) > 3)
+					outputGOL.setDeadAt(iRow, iCol);
 			}
  		}
 		
